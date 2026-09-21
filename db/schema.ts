@@ -9,6 +9,7 @@ export const shoppingItems = sqliteTable("shopping_items", {
   price: real("price"),
   imageUrl: text("image_url"),
   productUrl: text("product_url"),
+  category: text("category").notNull().default(""),
   note: text("note").notNull().default(""),
   createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
 });

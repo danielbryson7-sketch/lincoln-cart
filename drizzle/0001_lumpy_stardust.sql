@@ -1,0 +1,1 @@
+ALTER TABLE `shopping_items` ADD `category` text DEFAULT '' NOT NULL;

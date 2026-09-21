@@ -34,9 +34,10 @@ export async function POST(request: Request) {
     const quantity = Math.min(99, Math.max(1, Number(payload.quantity) || 1));
     const price = typeof payload.price === "number" && Number.isFinite(payload.price) ? Math.max(0, payload.price) : null;
     const note = typeof payload.note === "string" ? payload.note.trim().slice(0, 180) : "";
+    const category = typeof payload.category === "string" ? payload.category.trim().slice(0, 100) : "";
     const imageUrl = typeof payload.imageUrl === "string" ? payload.imageUrl.slice(0, 1600) : null;
     const productUrl = typeof payload.productUrl === "string" ? payload.productUrl.slice(0, 1600) : null;
-    const [item] = await getDb().insert(shoppingItems).values({ name, quantity, price, note, imageUrl, productUrl }).returning();
+    const [item] = await getDb().insert(shoppingItems).values({ name, quantity, price, category, note, imageUrl, productUrl }).returning();
     return json({ item }, { status: 201 });
   } catch (error) { return json({ error: message(error) }, { status: 503 }); }
 }

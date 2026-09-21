@@ -1,6 +1,6 @@
 import { env } from "cloudflare:workers";
 
-type SerpProduct = { product_id?: string; us_item_id?: string; title?: string; primary_offer?: { offer_price?: number }; price?: number; thumbnail?: string; product_page_url?: string; link?: string; rating?: number };
+type SerpProduct = { product_id?: string; us_item_id?: string; title?: string; primary_offer?: { offer_price?: number }; price?: number; thumbnail?: string; product_page_url?: string; link?: string; rating?: number; product_type?: string };
 
 const cors = { "access-control-allow-origin": "https://danielbryson7-sketch.github.io" };
 function json(body: unknown, init?: ResponseInit) { return Response.json(body, { ...init, headers: { ...cors, ...init?.headers } }); }
@@ -29,6 +29,7 @@ export async function GET(request: Request) {
       image: result.thumbnail ?? null,
       link: result.product_page_url ?? result.link ?? null,
       rating: result.rating ?? null,
+      category: result.product_type?.trim() || "Other",
     }));
     return json({ products, store: { id: "199", city: "Lincoln", state: "IL" } });
   } catch (error) {
