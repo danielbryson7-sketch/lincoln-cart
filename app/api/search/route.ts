@@ -2,11 +2,14 @@ import { env } from "cloudflare:workers";
 
 type SerpProduct = { product_id?: string; us_item_id?: string; title?: string; primary_offer?: { offer_price?: number }; price?: number; thumbnail?: string; product_page_url?: string; link?: string; rating?: number };
 
+const cors = { "access-control-allow-origin": "https://danielbryson7-sketch.github.io" };
+function json(body: unknown, init?: ResponseInit) { return Response.json(body, { ...init, headers: { ...cors, ...init?.headers } }); }
+
 export async function GET(request: Request) {
   const query = new URL(request.url).searchParams.get("q")?.trim().slice(0, 120) ?? "";
-  if (!query) return Response.json({ error: "Enter something to search for." }, { status: 400 });
+  if (!query) return json({ error: "Enter something to search for." }, { status: 400 });
   const apiKey = (env as unknown as { SERPAPI_KEY?: string }).SERPAPI_KEY;
-  if (!apiKey) return Response.json({ error: "Walmart search needs a SerpAPI key before it can go live." }, { status: 503 });
+  if (!apiKey) return json({ error: "Walmart search needs a SerpAPI key before it can go live." }, { status: 503 });
 
   const search = new URL("https://serpapi.com/search.json");
   search.searchParams.set("engine", "walmart");
@@ -27,9 +30,9 @@ export async function GET(request: Request) {
       link: result.product_page_url ?? result.link ?? null,
       rating: result.rating ?? null,
     }));
-    return Response.json({ products, store: { id: "199", city: "Lincoln", state: "IL" } });
+    return json({ products, store: { id: "199", city: "Lincoln", state: "IL" } });
   } catch (error) {
     const detail = error instanceof Error ? error.message : "Search failed";
-    return Response.json({ error: `Walmart search is temporarily unavailable. ${detail}` }, { status: 502 });
+    return json({ error: `Walmart search is temporarily unavailable. ${detail}` }, { status: 502 });
   }
 }
