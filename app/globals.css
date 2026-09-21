@@ -1,0 +1,29 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "../vendor/shadcn-tailwind-4.13.0.css";
+
+@utility scrollbar-thin { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.25) transparent; }
+
+:root {
+  --background: #f3f7fc; --foreground: #12233b; --card: #ffffff; --card-foreground: #12233b;
+  --popover: #ffffff; --popover-foreground: #12233b; --primary: #0756b6; --primary-foreground: #ffffff;
+  --secondary: #e9f2ff; --secondary-foreground: #0756b6; --muted: #edf2f7; --muted-foreground: #66758a;
+  --accent: #e9f2ff; --accent-foreground: #0756b6; --destructive: #d02b36; --border: #dce5f0;
+  --input: #cbd7e5; --ring: #0756b6; --radius: .85rem;
+}
+
+@theme inline {
+  --color-background: var(--background); --color-foreground: var(--foreground); --color-card: var(--card); --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover); --color-popover-foreground: var(--popover-foreground); --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary); --color-secondary-foreground: var(--secondary-foreground); --color-muted: var(--muted); --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent); --color-accent-foreground: var(--accent-foreground); --color-destructive: var(--destructive); --color-border: var(--border);
+  --color-input: var(--input); --color-ring: var(--ring); --radius-sm: calc(var(--radius) - 4px); --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius); --radius-xl: calc(var(--radius) + 4px); --font-sans: "Avenir Next", Avenir, "Segoe UI", Arial, sans-serif;
+}
+
+* { border-color: var(--border); }
+body { margin: 0; background: var(--background); color: var(--foreground); font-family: "Avenir Next", Avenir, "Segoe UI", Arial, sans-serif; }
+button, input { font: inherit; }
+.eyebrow { color: #0756b6; font-size: .75rem; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+@media (max-width: 420px) { .group > button:last-child { display: none; } }
+@media (prefers-reduced-motion: no-preference) { main { animation: fade-in .35s ease-out; } @keyframes fade-in { from { opacity: 0; transform: translateY(4px); } } }
